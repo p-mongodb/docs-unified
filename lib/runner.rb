@@ -7,7 +7,27 @@ class Runner
 
   attr_reader :project
 
+  def tut
+    prepare
+
+    ChildProcessHelper.check_call(%w(make html), cwd: project)
+  end
+
   def build
+    prepare
+
+    ChildProcessHelper.check_call(%w(make publish), cwd: project)
+  end
+
+  def deploy
+    prepare
+
+    ChildProcessHelper.check_call(%w(make publish deploy), cwd: project)
+  end
+
+  private
+
+  def prepare
     # Giza insists on being run in a git repo. Could consider patching this
     # out of giza instead of working around here.
     [
@@ -18,11 +38,5 @@ class Runner
     ].each do |cmd|
       ChildProcessHelper.check_call(cmd, cwd: project)
     end
-
-    ChildProcessHelper.check_call(%w(make html), cwd: project)
-  end
-
-  def deploy
-    ChildProcessHelper.check_call(%w(make publish deploy), cwd: project)
   end
 end

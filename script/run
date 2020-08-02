@@ -3,7 +3,7 @@
 $: << File.join(File.dirname(__FILE__), '../lib')
 
 unless ARGV.length == 2
-  raise "Usage: script/run <ruby|mongoid> <build|deploy>"
+  raise "Usage: script/run <ruby|mongoid> <tut|build|deploy>"
 end
 
 project, action = ARGV
@@ -12,8 +12,8 @@ unless %w(ruby mongoid).include?(project)
   raise "Invalid project: #{project}. Use ruby or mongoid"
 end
 
-unless %w(build deploy).include?(action)
-  raise "Invalid action: #{action}. Use build or deploy"
+unless %w(tut build deploy).include?(action)
+  raise "Invalid action: #{action}. Use tut, build or deploy"
 end
 
 require 'runner'
