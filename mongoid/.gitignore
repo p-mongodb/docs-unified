@@ -1,0 +1,5 @@
+.DS_Store
+giza.log
+source*
+build/
+.yardoc
