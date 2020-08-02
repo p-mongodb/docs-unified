@@ -22,6 +22,9 @@ RUN git clone https://github.com/p-mongo/mut && \
 
 WORKDIR /app
 
+COPY Gemfile .
+RUN gem install bundler && bundle install
+
 COPY . .
 
 ENTRYPOINT ["./entrypoint.sh"]
