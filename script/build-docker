@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+if test -z "$1"; then
+  echo "Usage: `basename $0` <ruby|mongoid>" 1>&2
+  exit 1
+fi
+
+docker build -t docs-unified .
+
+docker run -itv `pwd`/build:/build docs-unified \
+  sh -c "./script/run $1 build && rsync -av --delete $1/build/ /build"
