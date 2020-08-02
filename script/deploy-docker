@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+if test -z "$1"; then
+  echo "Usage: `basename $0` <ruby|mongoid>" 1>&2
+  exit 1
+fi
+
+docker build -t docs-unified .
+
+docker run -it \
+  -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+  -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
+  docs-unified \
+  ./script/run $1 deploy
