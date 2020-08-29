@@ -1,13 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
-set -e
+$: << File.join(File.dirname(__FILE__), '../lib')
 
-if test -z "$1"; then
-  echo "Usage: `basename $0` <ruby|mongoid>" 1>&2
-  exit 1
-fi
+require 'optparse'
+require 'child_process_helper'
 
-docker build -t docs-unified .
+options = {}
 
-docker run -itv `pwd`/build:/build docs-unified \
-  sh -c "./script/run $1 build && rsync -av --delete $1/build/ /build"
+OptionParser.new do |opts|
+  opts.on('-p', '--path=PATH', 'Build docs at PATH') do |v|
+    options[:path] = v
+  end
+end.parse!
+
+project = ARGV.shift
+
+unless %w(ruby mongoid).include?(project)
+  raise "Usage: build-docker [-p path] ruby|mongoid"
+end
+
+ChildProcessHelper.check_call(%w(docker build -t docs-unified .))
+
+ChildProcessHelper.check_call(%W(
+docker run -itv #{Dir.pwd}/build:/build docs-unified
+  sh -c) + ["./script/run #{project} build && rsync -av --delete #{project}/build/ /build"])
