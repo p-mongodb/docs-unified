@@ -4,6 +4,7 @@ $: << File.join(File.dirname(__FILE__), '../lib')
 
 require 'optparse'
 require 'child_process_helper'
+autoload :FileUtils, 'fileutils'
 
 options = {}
 
@@ -17,6 +18,16 @@ project = ARGV.shift
 
 unless %w(ruby mongoid).include?(project)
   raise "Usage: build-docker [-p path] ruby|mongoid"
+end
+
+FileUtils.rm_rf('.src')
+if options[:path]
+  ChildProcessHelper.check_call([
+    'rsync',
+      '--exclude', '.git', '--exclude', 'pkg', '--exclude', '*.gem',
+      '--exclude', 'yard-docs',
+      '--delete', '-a', options[:path] + '/', '.src',
+  ])
 end
 
 ChildProcessHelper.check_call(%w(docker build -t docs-unified .))

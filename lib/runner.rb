@@ -1,4 +1,5 @@
 autoload :ChildProcessHelper, 'child_process_helper'
+autoload :Byebug, 'byebug'
 
 class Runner
   def initialize(project)
@@ -37,6 +38,12 @@ class Runner
       %w(git commit --allow-empty -mRoot),
     ].each do |cmd|
       ChildProcessHelper.check_call(cmd, cwd: project)
+    end
+
+    if File.exist?('.src')
+      ChildProcessHelper.check_call(%w(git init), cwd: '.src')
+      ChildProcessHelper.check_call(%w(git add .), cwd: '.src')
+      ChildProcessHelper.check_call(%w(git commit -m source), cwd: '.src')
     end
   end
 end
