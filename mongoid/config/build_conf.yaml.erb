@@ -27,7 +27,11 @@ assets:
     repository: https://github.com/mongodb/docs-tools.git
   - branch: master
     path: build/mongoid-master
+    <% if File.exist?('.src') %>
+    repository: ../.src
+    <% else %>
     repository: https://github.com/mongodb/mongoid.git
+    <% end %>
 paths:
   output: 'build'
   source: 'source-master'

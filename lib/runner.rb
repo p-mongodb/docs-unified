@@ -1,3 +1,5 @@
+autoload :ERB, 'erb'
+autoload :Find, 'find'
 autoload :ChildProcessHelper, 'child_process_helper'
 autoload :Byebug, 'byebug'
 
@@ -45,5 +47,21 @@ class Runner
       ChildProcessHelper.check_call(%w(git add .), cwd: '.src')
       ChildProcessHelper.check_call(%w(git commit -m source), cwd: '.src')
     end
+
+    Find.find("#{project}/config") do |path|
+      if path.end_with?('.erb')
+        puts "Transforming #{path}"
+        template = File.read(path)
+        erb = ERB.new(template)
+        result = erb.result(get_binding)
+        File.open(path.sub(/\.erb\z/, ''), 'w') do |f|
+          f << result
+        end
+      end
+    end
+  end
+
+  def get_binding
+    binding
   end
 end

@@ -26,7 +26,11 @@ assets:
     repository: https://github.com/mongodb/docs-tools.git
   - branch: master
     path: build/ruby-driver-master
+    <% if File.exist?('.src') %>
+    repository: ../.src
+    <% else %>
     repository: https://github.com/mongodb/mongo-ruby-driver.git
+    <% end %>
   - branch: master
     path: build/bson-ruby
     repository: https://github.com/mongodb/bson-ruby.git
