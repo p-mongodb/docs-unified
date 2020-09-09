@@ -1,2 +1,5 @@
 build
 .src
+
+mongoid/config/build_conf.yaml
+ruby/config/build_conf.yaml
