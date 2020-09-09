@@ -34,10 +34,11 @@ class Runner
     # Giza insists on being run in a git repo. Could consider patching this
     # out of giza instead of working around here.
     [
+      %w(yard -v),
       %w(git init),
       %w(git config --global user.name Nobody),
       %w(git config --global user.email nobody@example.com),
-      %w(git commit --allow-empty -mRoot),
+      %w(git commit --allow-empty -qm Root),
     ].each do |cmd|
       ChildProcessHelper.check_call(cmd, cwd: project)
     end
@@ -45,7 +46,7 @@ class Runner
     if File.exist?('.src')
       ChildProcessHelper.check_call(%w(git init), cwd: '.src')
       ChildProcessHelper.check_call(%w(git add .), cwd: '.src')
-      ChildProcessHelper.check_call(%w(git commit -m source), cwd: '.src')
+      ChildProcessHelper.check_call(%w(git commit -qm Source), cwd: '.src')
     end
 
     Find.find("#{project}/config") do |path|

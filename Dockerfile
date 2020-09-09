@@ -10,9 +10,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
   apt-get -y install make git python-pip python3-pip \
-    ruby-dev yard pkg-config libxml2-dev && \
+    ruby-dev pkg-config libxml2-dev && \
   python2 -m pip install giza && \
-  python3 -m pip install mut
+  python3 -m pip install mut && \
+  gem install yard bundler
 
 # Apply the fix in
 # https://github.com/p-mongo/mut/commit/5beefc1c9ac2a9afabb86d918bfe598477b927e1
@@ -23,7 +24,7 @@ RUN git clone https://github.com/p-mongo/mut && \
 WORKDIR /app
 
 COPY Gemfile .
-RUN gem install bundler && bundle install
+RUN bundle install
 
 COPY . .
 

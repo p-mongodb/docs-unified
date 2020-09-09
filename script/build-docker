@@ -34,4 +34,4 @@ ChildProcessHelper.check_call(%w(docker build -t docs-unified .))
 
 ChildProcessHelper.check_call(%W(
 docker run -itv #{Dir.pwd}/build:/build docs-unified
-  sh -c) + ["./script/run #{project} build && rsync -av --delete #{project}/build/ /build"])
+  sh -c) + ["./script/run #{project} build && rsync -a --delete #{project}/build/ /build"])
