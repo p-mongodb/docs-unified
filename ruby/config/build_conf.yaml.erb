@@ -23,17 +23,17 @@ system:
 assets:
   - branch: master
     path: build/docs-tools
-    repository: https://github.com/mongodb/docs-tools.git
+    repository: https://github.com/mongodb/docs-tools
   - branch: master
     path: build/ruby-driver-master
     <% if File.exist?('.src') %>
     repository: ../.src
     <% else %>
-    repository: https://github.com/mongodb/mongo-ruby-driver.git
+    repository: https://github.com/mongodb/mongo-ruby-driver
     <% end %>
   - branch: master
     path: build/bson-ruby
-    repository: https://github.com/mongodb/bson-ruby.git
+    repository: https://github.com/mongodb/bson-ruby
 paths:
   output: 'build'
   source: 'source-master'
