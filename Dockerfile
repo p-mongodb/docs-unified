@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
   apt-get -y install make git python-pip python3-pip \
     ruby-dev yard pkg-config libxml2-dev && \
-  python -m pip install giza && \
+  python2 -m pip install giza && \
   python3 -m pip install mut
 
 # Apply the fix in
