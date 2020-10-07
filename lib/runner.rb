@@ -36,8 +36,8 @@ class Runner
     [
       %w(yard -v),
       %w(git init),
-      %w(git config --global user.name Nobody),
-      %w(git config --global user.email nobody@example.com),
+      #%w(git config --global user.name Nobody),
+      #%w(git config --global user.email nobody@example.com),
       %w(git commit --allow-empty -qm Root),
     ].each do |cmd|
       ChildProcessHelper.check_call(cmd, cwd: project)
