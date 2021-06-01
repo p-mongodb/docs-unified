@@ -31,6 +31,7 @@ class Runner
   private
 
   def prepare
+=begin
     # Giza insists on being run in a git repo. Could consider patching this
     # out of giza instead of working around here.
     [
@@ -48,6 +49,7 @@ class Runner
       ChildProcessHelper.check_call(%w(git add .), cwd: '.src')
       ChildProcessHelper.check_call(%w(git commit -qm Source), cwd: '.src')
     end
+=end
 
     Find.find("#{project}/config") do |path|
       if path.end_with?('.erb')
